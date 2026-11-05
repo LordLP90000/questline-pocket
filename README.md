@@ -63,7 +63,7 @@ Requires Node.js 22 or later; there are no dependencies to install.
 | Command | Purpose |
 |---------|---------|
 | `npm test` | Unit tests: model, dates, formats, backups, storage, offline files, icons |
-| `npm run e2e` | Plays the main flows in headless Edge or Chrome on an emulated iPhone and Android phone (light and dark, offline start, backups) and saves screenshots to `.e2e/` |
+| `npm run e2e` | Plays the main flows in headless Edge or Chrome on an emulated iPhone and Android phone (light and dark, offline start, backups, two windows, unreadable data) and saves screenshots to `.e2e/`. Set `E2E_URL` to check the published site instead, e.g. `E2E_URL=https://lordlp90000.github.io/questline-pocket/` |
 | `npm run serve` | Serves the app at http://127.0.0.1:8080 (`-- --lan` for the local network) |
 | `npm run icons` | Redraws the app icons in `icons/` |
 

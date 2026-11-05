@@ -20,7 +20,8 @@ const BROWSERS = [
 ];
 const PORT = 8137;
 const DEBUG_PORT = 9337;
-const ORIGIN = `http://127.0.0.1:${PORT}`;
+/** `E2E_URL` checks a published copy (e.g. on GitHub Pages) instead of this folder. */
+const ORIGIN = process.env.E2E_URL ? process.env.E2E_URL.replace(/\/$/, '') : `http://127.0.0.1:${PORT}`;
 const OUT = fileURLToPath(new URL('../.e2e/', import.meta.url));
 const DOWNLOADS = join(OUT, 'downloads');
 const UA = {
@@ -437,7 +438,7 @@ if (!browser) {
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 const profile = mkdtempSync(join(tmpdir(), 'questline-e2e-'));
-const server = await startServer({ port: PORT });
+const server = process.env.E2E_URL ? null : await startServer({ port: PORT });
 const child = spawn(browser, ['--headless=new', `--remote-debugging-port=${DEBUG_PORT}`, `--user-data-dir=${profile}`, '--no-first-run', '--no-default-browser-check', '--disable-extensions', 'about:blank'], { stdio: 'ignore' });
 
 let failed = false;
@@ -478,7 +479,7 @@ try {
 } finally {
   cdp?.close();
   child.kill();
-  server.close();
+  server?.close();
   await sleep(300);
   rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
 }
